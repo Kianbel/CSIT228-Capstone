@@ -4,18 +4,14 @@ import com.example.demo.classes.User;
 import com.example.demo.database.DatabaseHandler;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
-import javafx.stage.Stage;
 
 import java.io.*;
-import java.util.Objects;
 
 public class RegisterController {
     @FXML private Button buttonSignup;
@@ -68,8 +64,9 @@ public class RegisterController {
             User user = registerTask.getValue();
             if(user != null) {
                 showSuccess("Glad to have you, "+user.getFirstname()+"!");
-                saveSession(user);
-                navigateToEditor();
+//                saveSession(user);
+//                navigateToEditor();
+                navigateToLogin();
             } else {
                 showError("Registration failed: Username may exist.");
                 buttonSignup.setDisable(false);
@@ -91,31 +88,18 @@ public class RegisterController {
     }
 
     @FXML private void onSignInHyperlinkClicked() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/demo/Login_view.fxml"));
-            Parent root = loader.load();
-            Stage stage = (Stage) textfieldUsername.getScene().getWindow();
-            stage.getScene().setRoot(root);
-            stage.setTitle("Login Page");
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        ScreenSwitcher.switchScreen("/com/example/demo/LoginView.fxml");
     }
 
     private void navigateToEditor() {
         System.out.println("navigated to editor");
-           try {
-                Parent root = FXMLLoader.load(Objects.requireNonNull(
-                       getClass().getResource("/com/example/demo/RuntimeAnalyzer_view.fxml")
-               ));
-               Stage stage = (Stage) textfieldUsername.getScene().getWindow();
-                stage.getScene().setRoot(root);
-                stage.setTitle("Runtime Analyzer");
+        ScreenSwitcher.switchScreen("/com/example/demo/EditorView.fxml");
+    }
 
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+    private void navigateToLogin() {
+        System.out.println("navigated to login");
+        ScreenSwitcher.switchScreen("/com/example/demo/LoginView.fxml");
+
     }
 
     private void saveSession(User user) {
