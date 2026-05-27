@@ -24,12 +24,14 @@ T(n)-spector is an easy-to-use desktop application designed to help users, espec
 ## Evaluation Criteria Mapping
 
 ### 1. Object-Oriented Programming (OOP)
-- **Inheritance, Polymorphism, & Abstraction:** An abstract `Statement` class serves as the foundation for multi-line blocks (`MultiLineStatement`) and single-line expressions (`SingleLineStatement`). Which further brances to `Loop`, `Declaration`, and `Assignment` classes. Additionally, the `Operator` class branches into `AssignmentOperator`, `ArithmeticOperator`, `LogicalOperator`, and `IndexOperator`.
-
-- **Encapsulation:** The `CodeSnippet` class encapsulates relational database records—packaging metadata (`codeid`, `title`, `runtime`, `language`, `datecreated`, `userid`) into self-contained data models. The `User` class also does the same thing housing a user's data (`uid`, `username`, `firstname`, `lastname`).
+- **Inheritance**: An `Operation` will have at least one operator and one operand and is automatically inherited by the `Unary` or `Binary` operations
+- **Polymorphism**: An `Operation` will accept an `Expression` regardless of whether it's a `Value`, `Variable` or another `Operation`.
+- **Abstraction:** An abstract `Statement` class serves as the foundation for multi-line blocks (`MultiLineStatement`) and single-line statements (`SingleLineStatement`) and has an abstracted method getRuntime(), which will be overridden by respective implementation of runtime calculation.
+- **Encapsulation:**: The backend classes only expose methods and certain getters and setters for the frontend (GUI) to call.
 
 ### 2. Java Generics
-- **Type Parameterization:** This is demonstrated by the `Value<T>` class, which accepts a generic type parameter `T`.
+- **Type Parameterization:** This is demonstrated by the `Value<T>` class, which accepts a generic type parameter `T`, that represents a "value" in real coding syntax, where a value can be an integer, double, or char.
+- **List<T>:** Use of built-in classes that offer built-in type parameterization such as using List<Thread>, List<RuntimeRunnable>, etc.
 
 ### 3. Multithreading and Concurrency
 - **Parallel Complexity Processing:** When a `MultiLineStatement` (such as nested loops) is encountered, the engine instantiates an isolated `RuntimeRunnable` task worker and spins up a dedicated `Thread` instance to calculate its runtime complexity concurrently.
@@ -49,6 +51,7 @@ T(n)-spector is an easy-to-use desktop application designed to help users, espec
 
 ### 7. Design Patterns
 - **Singleton Pattern:** Applied to the database access layer (`MySQLConnection`). The application ensures that only a single, globally accessible instance of the database driver and initial connection payload exists at any time. This reduces resource consumption by channeling all queries through a single connection pipeline.
+- **Composite:** A `Statement` and an `Expression` both have a getRuntime() method in which, similar to a folder structure with a getSize() method, a `MultiLineStatement` can have multiple nested statements and an `Expression` can also have nested expressions. Calling the getRuntime() calls the inner classes' getRuntime() recursively until it reaches an `Operation`, returns 1 plus the runtime of its operands, or a `Value` or `Variable` which returns 0.
 
 ### 8. Code Quality and Documentation
 - **Clean Code Principles:** The codebase enforces the Single Responsibility Principle (SRP) by decoupling concerns—isolating connection logistics (`MySQLConnection`), database persistence layers (`DatabaseHandler`), security mechanics (`PasswordHasher`), and domain logic objects.

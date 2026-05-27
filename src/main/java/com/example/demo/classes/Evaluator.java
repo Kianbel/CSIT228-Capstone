@@ -7,7 +7,7 @@ public class Evaluator {
     static {
         evaluator.eval("1+1");
     }
-    public static ExprEvaluator getEvaluator(){
+    public static synchronized ExprEvaluator getEvaluator(){
         return evaluator;
     }
 }
