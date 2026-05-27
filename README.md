@@ -31,7 +31,7 @@ T(n)-spector is an easy-to-use desktop application designed to help users, espec
 
 ### 2. Java Generics
 - **Type Parameterization:** This is demonstrated by the `Value<T>` class, which accepts a generic type parameter `T`, that represents a "value" in real coding syntax, where a value can be an integer, double, or char.
-- **List<T>:** Use of built-in classes that offer built-in type parameterization such as using List<Thread>, List<RuntimeRunnable>, etc.
+- **`List<T>`:** Use of built-in classes that offer built-in type parameterization such as using `List<Thread>`, `List<RuntimeRunnable>`, etc.
 
 ### 3. Multithreading and Concurrency
 - **Parallel Complexity Processing:** When a `MultiLineStatement` (such as nested loops) is encountered, the engine instantiates an isolated `RuntimeRunnable` task worker and spins up a dedicated `Thread` instance to calculate its runtime complexity concurrently.
